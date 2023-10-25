@@ -1,14 +1,13 @@
 const BASE_URL = "https://apiforlearning.zendvn.com/api/v2/";
 
 const elMainMenu = document.getElementById("mainMenu");
-console.log(elMainMenu);
+const elArticlesTrending = document.getElementById("articlesTrending");
 
-// Make a request for a user with a given ID
+// RENDER MENUS
 axios.get(`${BASE_URL}categories_news`).then((response) => {
-  // handle success
   const data = response.data;
   const categories = data.data;
-  console.log(categories);
+  //   console.log(categories);
 
   let htmlMenu = "";
   let htmlMenuOther = "";
@@ -31,4 +30,27 @@ axios.get(`${BASE_URL}categories_news`).then((response) => {
       </a>
       <ul>${htmlMenuOther}</ul>
     </li>`;
+});
+
+//RENDER ARTICLES TRENDING
+
+axios.get(`${BASE_URL}articles/popular?limit=5`).then((response) => {
+  const articles = response.data.data;
+  console.log(articles);
+
+  let html = "";
+  articles.forEach((item, index) => {
+    html += /*html*/ `
+    <li>
+     <a href="single-post.html">
+       <span class="number">${index + 1}</span>
+       <h3>
+       ${item.title}
+       </h3>
+       <span class="author">${item.author}</span>
+     </a>
+  </li>`;
+  });
+
+  elArticlesTrending.innerHTML = html;
 });
