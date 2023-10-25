@@ -1,10 +1,12 @@
-const BASE_URL = "https://apiforlearning.zendvn.com/api/v2/";
+const API = axios.create({
+  baseURL: "https://apiforlearning.zendvn.com/api/v2/",
+});
 
 const elMainMenu = document.getElementById("mainMenu");
 const elArticlesTrending = document.getElementById("articlesTrending");
 
 // RENDER MENUS
-axios.get(`${BASE_URL}categories_news`).then((response) => {
+API.get(`categories_news`).then((response) => {
   const data = response.data;
   const categories = data.data;
   //   console.log(categories);
@@ -33,8 +35,7 @@ axios.get(`${BASE_URL}categories_news`).then((response) => {
 });
 
 //RENDER ARTICLES TRENDING
-
-axios.get(`${BASE_URL}articles/popular?limit=5`).then((response) => {
+API.get(`articles/popular?limit=5`).then((response) => {
   const articles = response.data.data;
   console.log(articles);
 
