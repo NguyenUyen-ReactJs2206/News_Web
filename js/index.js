@@ -41,16 +41,7 @@ API.get(`articles/popular?limit=5`).then((response) => {
 
   let html = "";
   articles.forEach((item, index) => {
-    html += /*html*/ `
-    <li>
-     <a href="single-post.html">
-       <span class="number">${index + 1}</span>
-       <h3>
-       ${item.title}
-       </h3>
-       <span class="author">${item.author}</span>
-     </a>
-  </li>`;
+    html += renderArticleTrendingItem(item, index);
   });
 
   elArticlesTrending.innerHTML = html;
@@ -64,44 +55,69 @@ API.get(`articles?limit=5`).then((response) => {
   let html = "";
   articles.forEach((item, index) => {
     if (index === 0) {
-      elArticleNewLarge.innerHTML = /*html*/ `
-        <div class="post-entry-1 lg">
-        <a href="#"
-          ><img
-            src="${item.thumb}"
-            alt="${item.title}"
-            class="img-fluid"
-        /></a>
-        <div class="post-meta">
-          <span class="date">${item.category.name}</span>
-          <span class="mx-1">&bullet;</span> 
-          <span>${item.publish_date}</span>
-        </div>
-        <h2>
-          <a href="#"
-            >${item.title}</a
-          >
-        </h2>
-        <p class="mb-4 d-block">
-          ${item.description}
-        </p>
-
-        <div class="d-flex align-items-center author">
-          <div class="photo">
-            <img
-              src="assets/img/person-1.jpg"
-              alt=""
-              class="img-fluid"
-            />
-          </div>
-          <div class="name">
-            <h3 class="m-0 p-0">${item.author}</h3>
-          </div>
-        </div>
-      </div>
-        `;
+      elArticleNewLarge.innerHTML = renderArticleNewLargeItem(item);
     } else {
-      html += /*html*/ ` 
+      html += renderArticleNewItem(item);
+    }
+  });
+
+  elArticlesNew.innerHTML = html;
+});
+
+function renderArticleTrendingItem(item, index) {
+  return /*html*/ `
+  <li>
+   <a href="single-post.html">
+     <span class="number">${index + 1}</span>
+     <h3>
+     ${item.title}
+     </h3>
+     <span class="author">${item.author}</span>
+   </a>
+  </li>`;
+}
+
+function renderArticleNewLargeItem(item) {
+  return /*html*/ `
+  <div class="post-entry-1 lg">
+  <a href="#"
+    ><img
+      src="${item.thumb}"
+      alt="${item.title}"
+      class="img-fluid"
+  /></a>
+  <div class="post-meta">
+    <span class="date">${item.category.name}</span>
+    <span class="mx-1">&bullet;</span> 
+    <span>${item.publish_date}</span>
+  </div>
+  <h2>
+    <a href="#"
+      >${item.title}</a
+    >
+  </h2>
+  <p class="mb-4 d-block">
+    ${item.description}
+  </p>
+  
+  <div class="d-flex align-items-center author">
+    <div class="photo">
+      <img
+        src="assets/img/person-1.jpg"
+        alt=""
+        class="img-fluid"
+      />
+    </div>
+    <div class="name">
+      <h3 class="m-0 p-0">${item.author}</h3>
+    </div>
+  </div>
+  </div>
+  `;
+}
+
+function renderArticleNewItem(item) {
+  return /*html*/ ` 
     <div class="col-lg-6">
       <div class="post-entry-1">
         <a href="#"
@@ -122,8 +138,4 @@ API.get(`articles?limit=5`).then((response) => {
         </h2>
       </div>
     </div>`;
-    }
-  });
-
-  elArticlesNew.innerHTML = html;
-});
+}
