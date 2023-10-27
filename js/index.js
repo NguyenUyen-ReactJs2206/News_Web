@@ -6,6 +6,9 @@ const elMainMenu = document.getElementById("mainMenu");
 const elArticlesTrending = document.getElementById("articlesTrending");
 const elArticlesNew = document.getElementById("articlesNew");
 const elArticleNewLarge = document.getElementById("articleNewLarge");
+const elCategoriesFeturedWithArticles = document.getElementById(
+  "categoriesFeaturedWithArticles"
+);
 
 // RENDER MENUS
 API.get(`categories_news`).then((response) => {
@@ -50,7 +53,6 @@ API.get(`articles/popular?limit=5`).then((response) => {
 //RENDER ALL ARTICLE NEW
 API.get(`articles?limit=5`).then((response) => {
   const articles = response.data.data;
-  console.log(articles);
 
   let html = "";
   articles.forEach((item, index) => {
@@ -62,6 +64,189 @@ API.get(`articles?limit=5`).then((response) => {
   });
 
   elArticlesNew.innerHTML = html;
+});
+
+//RENDER CATEGORY FEATURE WITH ARTICLES
+API.get("categories_news/articles?limit_cate=2&limit=9").then((response) => {
+  const data = response.data.data;
+  console.log(data);
+
+  let html = "";
+  data.forEach((item, index) => {
+    html += /*html*/ `<section class="category-section">
+<div class="container" data-aos="fade-up">
+  <div
+    class="section-header d-flex justify-content-between align-items-center mb-5"
+  >
+    <h2>${item.name}</h2>
+    <div>
+      <a href="category.html" class="more">See All Lifestyle</a>
+    </div>
+  </div>
+
+  <div class="row g-5">
+    <div class="col-lg-8">
+      <div class="row g-5">
+        <div class="col-lg-6">
+          <div class="post-entry-1">
+            <a href="single-post.html"
+              ><img
+                src="assets/img/post-landscape-6.jpg"
+                alt=""
+                class="img-fluid"
+            /></a>
+            <div class="post-meta">
+              <span class="date">Lifestyle</span>
+              <span class="mx-1">&bullet;</span>
+              <span>Jul 5th '22</span>
+            </div>
+            <h2>
+              <a href="single-post.html"
+                >Let’s Get Back to Work, New York</a
+              >
+            </h2>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="post-entry-1">
+            <a href="single-post.html"
+              ><img
+                src="assets/img/post-landscape-5.jpg"
+                alt=""
+                class="img-fluid"
+            /></a>
+            <div class="post-meta">
+              <span class="date">Lifestyle</span>
+              <span class="mx-1">&bullet;</span>
+              <span>Jul 17th '22</span>
+            </div>
+            <h2>
+              <a href="single-post.html"
+                >How to Avoid Distraction and Stay Focused During
+                Video Calls?</a
+              >
+            </h2>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="post-entry-1">
+            <a href="single-post.html"
+              ><img
+                src="assets/img/post-landscape-3.jpg"
+                alt=""
+                class="img-fluid"
+            /></a>
+            <div class="post-meta">
+              <span class="date">Lifestyle</span>
+              <span class="mx-1">&bullet;</span>
+              <span>Jul 5th '22</span>
+            </div>
+            <h2>
+              <a href="single-post.html"
+                >6 Easy Steps To Create Your Own Cute Merch For
+                Instagram</a
+              >
+            </h2>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="post-entry-1">
+            <a href="single-post.html"
+              ><img
+                src="assets/img/post-landscape-2.jpg"
+                alt=""
+                class="img-fluid"
+            /></a>
+            <div class="post-meta">
+              <span class="date">Lifestyle</span>
+              <span class="mx-1">&bullet;</span>
+              <span>Mar 1st '22</span>
+            </div>
+            <h2>
+              <a href="single-post.html"
+                >10 Life-Changing Hacks Every Working Mom Should
+                Know</a
+              >
+            </h2>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 border-start custom-border">
+      <div class="post-entry-1 border-bottom">
+        <div class="post-meta">
+          <span class="date">Lifestyle</span>
+          <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span>
+        </div>
+        <h2 class="mb-2">
+          <a href="single-post.html"
+            >How to Avoid Distraction and Stay Focused During Video
+            Calls?</a
+          >
+        </h2>
+        <span class="author mb-3 d-block">Jenny Wilson</span>
+      </div>
+
+      <div class="post-entry-1 border-bottom">
+        <div class="post-meta">
+          <span class="date">Lifestyle</span>
+          <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span>
+        </div>
+        <h2 class="mb-2">
+          <a href="single-post.html"
+            >17 Pictures of Medium Length Hair in Layers That Will
+            Inspire Your New Haircut</a
+          >
+        </h2>
+        <span class="author mb-3 d-block">Jenny Wilson</span>
+      </div>
+
+      <div class="post-entry-1 border-bottom">
+        <div class="post-meta">
+          <span class="date">Lifestyle</span>
+          <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span>
+        </div>
+        <h2 class="mb-2">
+          <a href="single-post.html"
+            >9 Half-up/half-down Hairstyles for Long and Medium
+            Hair</a
+          >
+        </h2>
+        <span class="author mb-3 d-block">Jenny Wilson</span>
+      </div>
+
+      <div class="post-entry-1 border-bottom">
+        <div class="post-meta">
+          <span class="date">Lifestyle</span>
+          <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span>
+        </div>
+        <h2 class="mb-2">
+          <a href="single-post.html"
+            >Life Insurance And Pregnancy: A Working Mom’s Guide</a
+          >
+        </h2>
+        <span class="author mb-3 d-block">Jenny Wilson</span>
+      </div>
+      <div class="post-entry-1 border-bottom">
+        <div class="post-meta">
+          <span class="date">Lifestyle</span>
+          <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span>
+        </div>
+        <h2 class="mb-2">
+          <a href="single-post.html"
+            >Life Insurance And Pregnancy: A Working Mom’s Guide</a
+          >
+        </h2>
+        <span class="author mb-3 d-block">Jenny Wilson</span>
+      </div>
+    </div>
+  </div>
+  <!-- End .row -->
+</div>
+</section>
+`;
+  });
+  elCategoriesFeturedWithArticles.innerHTML = html;
 });
 
 function renderArticleTrendingItem(item, index) {
