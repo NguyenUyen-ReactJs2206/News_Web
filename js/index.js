@@ -80,7 +80,7 @@ API.get("categories_news/articles?limit_cate=2&limit=9").then((response) => {
     <section class="category-section">
         <div class="container" data-aos="fade-up">
           ${renderCategorySectionTitle(categoryName)}
-          ${renderArticlesByCategoryFeatured(articles)}
+          ${renderArticlesByCategoryFeatured(articles, index)}
         </div>
     </section>
 `;
@@ -176,7 +176,7 @@ function renderCategorySectionTitle(categoryName) {
   `;
 }
 
-function renderArticlesByCategoryFeatured(articles) {
+function renderArticlesByCategoryFeatured(articles, idx) {
   let htmlArticlesLeft = "";
   let htmlArticlesRight = "";
 
@@ -201,7 +201,7 @@ function renderArticlesByCategoryFeatured(articles) {
           </div>
           <h2>
             <a href="#"
-              >Let’s Get Back to Work, New York</a
+              >${title}</a
             >
           </h2>
         </div>
@@ -224,14 +224,25 @@ function renderArticlesByCategoryFeatured(articles) {
     }
   });
 
+  //Way 1
+  let rowClass = "";
+  let borderClass = "border-start";
+  if (idx % 2 !== 0) {
+    rowClass = "flex-row-reverse";
+    borderClass = "";
+  }
+  //Way 2
+  // const rowClass = idx % 2 === 0 ? "" : "flex-row-reverse";
+  // const borderClass = idx % 2 === 0 ? "border-start" : "";
+
   return /*html*/ `
-  <div class="row g-5">
+  <div class="row g-5 ${rowClass}">
     <div class="col-lg-8">
       <div class="row g-5">
       ${htmlArticlesLeft}
       </div>
     </div>
-    <div class="col-lg-4 border-start custom-border">
+    <div class="col-lg-4 ${borderClass} custom-border">
       ${htmlArticlesRight}
     </div>
   </div>`;
