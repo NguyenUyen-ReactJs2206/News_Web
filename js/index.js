@@ -9,6 +9,12 @@ const elArticleNewLarge = document.getElementById("articleNewLarge");
 const elCategoriesFeturedWithArticles = document.getElementById(
   "categoriesFeaturedWithArticles"
 );
+const elCategoriesFeaturedTab = document.getElementById(
+  "categoriesFeaturedTab"
+);
+const elCategoriesFeaturedTabContent = document.getElementById(
+  "categoriesFeaturedTabContent"
+);
 
 // RENDER MENUS
 API.get(`categories_news`).then((response) => {
@@ -87,6 +93,80 @@ API.get("categories_news/articles?limit_cate=2&limit=9").then((response) => {
   });
 
   elCategoriesFeturedWithArticles.innerHTML = html;
+});
+
+//RENDER CATEGORY FEATURED WITH ARTICLES LAYOUT TAB
+API.get("categories_news/articles?limit_cate=4&limit=4").then((response) => {
+  const data = response.data.data;
+  console.log(data);
+
+  let htmlTab = "";
+  let htmlTabContent = "";
+
+  data.forEach((item, index) => {
+    const categoryName = item.name;
+    const articles = item.articles;
+    const slug = item.slug;
+    const active = index === 0 ? "active" : "";
+    const activeShow = index === 0 ? "active show" : "";
+
+    let htmlArticles = "";
+    articles.forEach((articleItem, index) => {
+      htmlArticles += /*html*/ `
+    <div class="col-md-6 col-lg-3">
+      <div class="post-entry-1">
+        <a href="single-post.html"
+          ><img
+            src="${articleItem.thumb}"
+            alt="${articleItem.title}"
+            class="img-fluid"
+        /></a>
+        <div class="post-meta">
+          <span>${articleItem.publish_date}</span>
+        </div>
+        <h2>
+          <a href="#"
+            >${articleItem.title}</a
+          >
+        </h2>
+      </div>
+    </div>
+      `;
+    });
+
+    htmlTab += /*html*/ `
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link ${active}"
+                id="${slug}-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#${slug}-tab-pane"
+                type="button"
+                role="tab"
+                aria-controls="${slug}-tab-pane"
+                aria-selected="false"
+              >
+                ${categoryName}
+              </button>
+            </li>
+`;
+
+    htmlTabContent += /*html*/ ` 
+  <div
+    class="tab-pane fade ${activeShow}"
+    id="${slug}-tab-pane"
+    role="tabpanel"
+    aria-labelledby="${slug}-tab"
+    tabindex="0"
+  >
+    <div class="row g-5">${htmlArticles}</div>
+  </div>
+
+`;
+  });
+
+  elCategoriesFeaturedTab.innerHTML = htmlTab;
+  elCategoriesFeaturedTabContent.innerHTML = htmlTabContent;
 });
 
 function renderArticleTrendingItem(item, index) {
