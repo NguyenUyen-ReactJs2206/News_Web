@@ -15,7 +15,7 @@ const elCategoriesFeaturedTab = document.getElementById(
 const elCategoriesFeaturedTabContent = document.getElementById(
   "categoriesFeaturedTabContent"
 );
-
+const elArticlesSlider = document.getElementById("articlesSlider");
 // RENDER MENUS
 API.get(`categories_news`).then((response) => {
   const data = response.data;
@@ -42,6 +42,36 @@ API.get(`categories_news`).then((response) => {
       </a>
       <ul>${htmlMenuOther}</ul>
     </li>`;
+});
+
+//RENDER ARTICLES SLIDER
+API.get(`articles/popular?limit=5`).then((response) => {
+  const articles = response.data.data;
+
+  let html = "";
+  articles.forEach((item, index) => {
+    html += /*html*/ ` 
+  <div class="swiper-slide">
+    <a
+      href="single-post.html"
+      class="img-bg d-flex align-items-end"
+      style="
+        background-image: url('${item.thumb}');
+      "
+    >
+      <div class="img-bg-inner">
+        <h2>
+          ${item.title}
+        </h2>
+        <p>
+        ${item.description}
+        </p>
+      </div>
+    </a>
+  </div>`;
+  });
+
+  elArticlesSlider.innerHTML = html;
 });
 
 //RENDER ARTICLES TRENDING
