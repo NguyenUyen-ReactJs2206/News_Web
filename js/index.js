@@ -2,6 +2,9 @@ const API = axios.create({
   baseURL: "https://apiforlearning.zendvn.com/api/v2/",
 });
 
+dayjs.locale("vi");
+dayjs.extend(window.dayjs_plugin_relativeTime);
+
 const elMainMenu = document.getElementById("mainMenu");
 const elArticlesTrending = document.getElementById("articlesTrending");
 const elArticlesNew = document.getElementById("articlesNew");
@@ -53,7 +56,7 @@ API.get(`articles/popular?limit=5`).then((response) => {
     html += /*html*/ ` 
   <div class="swiper-slide">
     <a
-      href="single-post.html"
+      href="#"
       class="img-bg d-flex align-items-end"
       style="
         background-image: url('${item.thumb}');
@@ -213,6 +216,7 @@ function renderArticleTrendingItem(item, index) {
 }
 
 function renderArticleNewLargeItem(item) {
+  const publishDate = dayjs(item.publish_date).fromNow();
   return /*html*/ `
   <div class="post-entry-1 lg">
   <a href="#"
@@ -224,7 +228,7 @@ function renderArticleNewLargeItem(item) {
   <div class="post-meta">
     <span class="date">${item.category.name}</span>
     <span class="mx-1">&bullet;</span> 
-    <span>${item.publish_date}</span>
+    <span>${publishDate}</span>
   </div>
   <h2>
     <a href="#"
