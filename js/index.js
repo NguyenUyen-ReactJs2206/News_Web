@@ -231,7 +231,7 @@ function renderArticleNewLargeItem(item) {
       class="img-fluid"
   /></a>
   <div class="post-meta">
-    <a href="category.html?id=${categoryId}" class="date">${item.category.name}</a>
+    <a href="category.html?id=${categoryId}" class="post-meta">${item.category.name}</a>
     <span class="mx-1">&bullet;</span> 
     <span>${publishDate}</span>
   </div>
@@ -273,7 +273,7 @@ function renderArticleNewItem(item) {
             class="img-fluid"
         /></a>
         <div class="post-meta">
-           <a href="category.html?id=${categoryId}" class="date">${item.category.name}</a>
+           <a href="category.html?id=${categoryId}" class="post-meta">${item.category.name}</a>
           <span class="mx-1">&bullet;</span>
           <span>${item.publish_date}</span>
         </div>
