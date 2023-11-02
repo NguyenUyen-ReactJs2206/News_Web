@@ -30,9 +30,9 @@ API.get(`categories_news`).then((response) => {
 
   categories.forEach((item, index) => {
     if (index < 3) {
-      htmlMenu += /*html*/ `<li><a href="#">${item.name}</a></li>`;
+      htmlMenu += /*html*/ `<li><a href="category.html?id=${item.id}">${item.name}</a></li>`;
     } else {
-      htmlMenuOther += /*html*/ `<li><a href="#">${item.name}</a></li>`;
+      htmlMenuOther += /*html*/ `<li><a href="category.html?id=${item.id}">${item.name}</a></li>`;
     }
   });
 
@@ -93,6 +93,7 @@ API.get(`articles/popular?limit=5`).then((response) => {
 //RENDER ALL ARTICLE NEW
 API.get(`articles?limit=5`).then((response) => {
   const articles = response.data.data;
+  console.log(articles, "aaaaaaaaaaa");
 
   let html = "";
   articles.forEach((item, index) => {
@@ -109,17 +110,18 @@ API.get(`articles?limit=5`).then((response) => {
 //RENDER CATEGORY FEATURE WITH ARTICLES
 API.get("categories_news/articles?limit_cate=2&limit=9").then((response) => {
   const data = response.data.data;
-  console.log(data);
+  // console.log(data);
 
   let html = "";
   data.forEach((item, index) => {
+    const categoryId = item.id;
     const categoryName = item.name;
     const articles = item.articles;
 
     html += /*html*/ `
     <section class="category-section">
         <div class="container" data-aos="fade-up">
-          ${renderCategorySectionTitle(categoryName)}
+          ${renderCategorySectionTitle(categoryName, categoryId)}
           ${renderArticlesByCategoryFeatured(articles, index)}
         </div>
     </section>
@@ -218,6 +220,8 @@ function renderArticleTrendingItem(item, index) {
 
 function renderArticleNewLargeItem(item) {
   const publishDate = dayjs(item.publish_date).fromNow();
+  const categoryId = item.category.id;
+
   return /*html*/ `
   <div class="post-entry-1 lg">
   <a href="#"
@@ -227,7 +231,7 @@ function renderArticleNewLargeItem(item) {
       class="img-fluid"
   /></a>
   <div class="post-meta">
-    <span class="date">${item.category.name}</span>
+    <a href="category.html?id=${categoryId}" class="date">${item.category.name}</a>
     <span class="mx-1">&bullet;</span> 
     <span>${publishDate}</span>
   </div>
@@ -257,6 +261,8 @@ function renderArticleNewLargeItem(item) {
 }
 
 function renderArticleNewItem(item) {
+  const categoryId = item.category.id;
+
   return /*html*/ ` 
     <div class="col-lg-6">
       <div class="post-entry-1">
@@ -267,7 +273,7 @@ function renderArticleNewItem(item) {
             class="img-fluid"
         /></a>
         <div class="post-meta">
-          <span class="date">${item.category.name}</span>
+           <a href="category.html?id=${categoryId}" class="date">${item.category.name}</a>
           <span class="mx-1">&bullet;</span>
           <span>${item.publish_date}</span>
         </div>
@@ -280,12 +286,12 @@ function renderArticleNewItem(item) {
     </div>`;
 }
 
-function renderCategorySectionTitle(categoryName) {
+function renderCategorySectionTitle(categoryName, categoryId) {
   return /*html*/ `
 <div class="section-header d-flex justify-content-between align-items-center mb-5">
    <h2>${categoryName}</h2>
    <div>
-     <a href="category.html" class="more">See All ${categoryName}</a>
+     <a href="category.html?id=${categoryId}" class="more">See All ${categoryName}</a>
    </div>
 </div>
   `;

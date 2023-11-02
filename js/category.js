@@ -17,9 +17,9 @@ API.get(`categories_news`).then((response) => {
 
   categories.forEach((item, index) => {
     if (index < 3) {
-      htmlMenu += /*html*/ `<li><a href="#">${item.name}</a></li>`;
+      htmlMenu += /*html*/ `<li><a href="category.html?id=${item.id}">${item.name}</a></li>`;
     } else {
-      htmlMenuOther += /*html*/ `<li><a href="#">${item.name}</a></li>`;
+      htmlMenuOther += /*html*/ `<li><a href="category.html?id=${item.id}">${item.name}</a></li>`;
     }
   });
 
