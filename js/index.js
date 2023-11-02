@@ -19,6 +19,7 @@ const elCategoriesFeaturedTabContent = document.getElementById(
   "categoriesFeaturedTabContent"
 );
 const elArticlesSlider = document.getElementById("articlesSlider");
+
 // RENDER MENUS
 API.get(`categories_news`).then((response) => {
   const data = response.data;
@@ -26,7 +27,7 @@ API.get(`categories_news`).then((response) => {
 
   let htmlMenu = "";
   let htmlMenuOther = "";
-  //vong lap forEach
+
   categories.forEach((item, index) => {
     if (index < 3) {
       htmlMenu += /*html*/ `<li><a href="#">${item.name}</a></li>`;
