@@ -95,7 +95,7 @@ function getArticles(page = 1) {
                       </div>`;
       });
       elCategoryTitle.innerText = `Category: ${categoryName}`;
-      elArticles.innerHTML = html;
+      elArticles.innerHTML += html;
     }
   );
 }
