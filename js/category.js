@@ -49,6 +49,8 @@ getArticles();
 // LOAD MORE
 elBtnLoadMore.addEventListener("click", function () {
   currentPage++;
+  elBtnLoadMore.innerText = "Đang tải thêm...";
+  elBtnLoadMore.disabled = true;
   getArticles(currentPage);
 });
 
@@ -96,6 +98,8 @@ function getArticles(page = 1) {
       });
       elCategoryTitle.innerText = `Category: ${categoryName}`;
       elArticles.innerHTML += html;
+      elBtnLoadMore.innerText = "Xem thêm";
+      elBtnLoadMore.disabled = false;
     }
   );
 }
