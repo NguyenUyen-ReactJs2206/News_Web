@@ -14,7 +14,9 @@ const elMyPagination = document.getElementById("myPagination");
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const id = parseInt(urlParams.get("id"));
-let currentPage = 1;
+let currentPage = parseInt(urlParams.get("page"));
+// Not a number then currentPage=1
+if (isNaN(currentPage)) currentPage = 1;
 
 // RENDER MENUS
 API.get(`categories_news`).then((response) => {
@@ -58,24 +60,34 @@ getArticles();
 
 // Event Delegate
 elMyPagination.addEventListener("click", function (e) {
-  console.log(e.target);
   const el = e.target;
   // Kiểm tra 1 element có tồn tại một class có tên là page-item
   if (el.classList.contains("page-item")) {
     currentPage = parseInt(el.innerText);
     getArticles(currentPage);
+    addOrUpdateUrlParameter("page", currentPage);
   }
 
   if (el.classList.contains("page-item-prev")) {
     currentPage--;
     getArticles(currentPage);
+    addOrUpdateUrlParameter("page", currentPage);
   }
 
   if (el.classList.contains("page-item-next")) {
     currentPage++;
     getArticles(currentPage);
+    addOrUpdateUrlParameter("page", currentPage);
   }
 });
+
+function addOrUpdateUrlParameter(key, value) {
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  urlParams.set(key, value);
+  const newUrl = window.location.pathname + "?" + urlParams.toString();
+  history.pushState(null, "", newUrl);
+}
 
 function getArticles(page = 1) {
   API.get(`categories_news/${id}/articles?limit=5&page=${page}`).then(
@@ -134,7 +146,7 @@ function renderPagination(total) {
 
   let html = `<a href="#" class="prev page-item-prev ${disablePrev}">Prevous</a>`;
   for (let index = 1; index < total; index++) {
-    const active = index === currentPage ? "active" : "";
+    const active = index === currentPage ? "active pointer-events-none" : "";
 
     html += `
     <a href="#" class="page-item ${active}">${index}</a>
