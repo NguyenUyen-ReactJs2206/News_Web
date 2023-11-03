@@ -56,6 +56,17 @@ getArticles();
 //   getArticles(currentPage);
 // });
 
+// Event Delegate
+elMyPagination.addEventListener("click", function (e) {
+  console.log(e.target);
+  const el = e.target;
+  // Kiểm tra 1 element có tồn tại một class có tên là page-item
+  if (el.classList.contains("page-item")) {
+    currentPage = parseInt(el.innerText);
+    getArticles(currentPage);
+  }
+});
+
 function getArticles(page = 1) {
   API.get(`categories_news/${id}/articles?limit=5&page=${page}`).then(
     (response) => {
@@ -98,8 +109,10 @@ function getArticles(page = 1) {
                       </div>`;
       });
       elCategoryTitle.innerText = `Category: ${categoryName}`;
-      elArticles.innerHTML += html;
+      elArticles.innerHTML = html;
       renderPagination(totalPages);
+
+      //   elArticles.innerHTML += html;
       //   elBtnLoadMore.innerText = "Xem thêm";
       //   elBtnLoadMore.disabled = false;
     }
@@ -107,13 +120,14 @@ function getArticles(page = 1) {
 }
 
 function renderPagination(total) {
-  let html = "";
+  let html = `<a href="#" class="prev">Prevous</a>`;
   for (let index = 1; index < total; index++) {
-    html += `
-    <a href="#" class="prev">Prevous</a>
-    <a href="#">${index}</a>
-    <a href="#" class="next">Next</a>`;
-  }
+    const active = index === currentPage ? "active" : "";
 
+    html += `
+    <a href="#" class="page-item ${active}">${index}</a>
+`;
+  }
+  html += `<a href="#" class="next">Next</a>`;
   elMyPagination.innerHTML = html;
 }
