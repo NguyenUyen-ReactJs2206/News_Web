@@ -8,7 +8,8 @@ dayjs.extend(window.dayjs_plugin_relativeTime);
 const elMainMenu = document.getElementById("mainMenu");
 const elArticles = document.getElementById("articles");
 const elCategoryTitle = document.getElementById("categoryTitle");
-const elBtnLoadMore = document.getElementById("btnLoadMore");
+// const elBtnLoadMore = document.getElementById("btnLoadMore");
+const elMyPagination = document.getElementById("myPagination");
 
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
@@ -43,25 +44,25 @@ API.get(`categories_news`).then((response) => {
       </li>`;
 });
 
+// RENDER ARTICLES FOR CATEGORY
 // Load Article of Page=1 when entering the page
 getArticles();
 
 // LOAD MORE
-elBtnLoadMore.addEventListener("click", function () {
-  currentPage++;
-  elBtnLoadMore.innerText = "Đang tải thêm...";
-  elBtnLoadMore.disabled = true;
-  getArticles(currentPage);
-});
+// elBtnLoadMore.addEventListener("click", function () {
+//   currentPage++;
+//   elBtnLoadMore.innerText = "Đang tải thêm...";
+//   elBtnLoadMore.disabled = true;
+//   getArticles(currentPage);
+// });
 
-//RENDER ARTICLES FOR CATEGORY
 function getArticles(page = 1) {
   API.get(`categories_news/${id}/articles?limit=5&page=${page}`).then(
     (response) => {
       const articles = response.data.data;
       let categoryName = "";
-
-      console.log(articles, "ssss");
+      console.log(response.data);
+      const totalPages = response.data.meta.last_page;
 
       let html = "";
       articles.forEach((item) => {
@@ -90,7 +91,7 @@ function getArticles(page = 1) {
                                       <img src="assets/img/person-2.jpg" alt=""class="img-fluid" />
                                   </div>
                                   <div class="name">
-                                      h3 class="m-0 p-0">${authorName}</h3>
+                                      <h3 class="m-0 p-0">${authorName}</h3>
                                   </div>
                               </div>
                           </div>
@@ -98,8 +99,21 @@ function getArticles(page = 1) {
       });
       elCategoryTitle.innerText = `Category: ${categoryName}`;
       elArticles.innerHTML += html;
-      elBtnLoadMore.innerText = "Xem thêm";
-      elBtnLoadMore.disabled = false;
+      renderPagination(totalPages);
+      //   elBtnLoadMore.innerText = "Xem thêm";
+      //   elBtnLoadMore.disabled = false;
     }
   );
+}
+
+function renderPagination(total) {
+  let html = "";
+  for (let index = 1; index < total; index++) {
+    html += `
+    <a href="#" class="prev">Prevous</a>
+    <a href="#">${index}</a>
+    <a href="#" class="next">Next</a>`;
+  }
+
+  elMyPagination.innerHTML = html;
 }
