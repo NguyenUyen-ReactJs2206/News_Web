@@ -1,11 +1,3 @@
-const API = axios.create({
-  baseURL: "https://apiforlearning.zendvn.com/api/v2/",
-});
-
-dayjs.locale("vi");
-dayjs.extend(window.dayjs_plugin_relativeTime);
-
-const elMainMenu = document.getElementById("mainMenu");
 const elArticles = document.getElementById("articles");
 const elCategoryTitle = document.getElementById("categoryTitle");
 // const elBtnLoadMore = document.getElementById("btnLoadMore");
@@ -17,34 +9,6 @@ const id = parseInt(urlParams.get("id"));
 let currentPage = parseInt(urlParams.get("page"));
 // Not a number then currentPage=1
 if (isNaN(currentPage)) currentPage = 1;
-
-// RENDER MENUS
-API.get(`categories_news`).then((response) => {
-  const data = response.data;
-  const categories = data.data;
-
-  let htmlMenu = "";
-  let htmlMenuOther = "";
-
-  categories.forEach((item, index) => {
-    if (index < 3) {
-      htmlMenu += /*html*/ `<li><a href="category.html?id=${item.id}">${item.name}</a></li>`;
-    } else {
-      htmlMenuOther += /*html*/ `<li><a href="category.html?id=${item.id}">${item.name}</a></li>`;
-    }
-  });
-
-  //hien thi len id=mainMenu
-  elMainMenu.innerHTML =
-    htmlMenu +
-    /*html*/ `<li class="dropdown">
-         <a href="category.html">
-           <span>Danh mục khác</span>
-           <i class="bi bi-chevron-down dropdown-indicator"></i>
-        </a>
-        <ul>${htmlMenuOther}</ul>
-      </li>`;
-});
 
 // RENDER ARTICLES FOR CATEGORY
 // Load Article of Page=1 when entering the page
