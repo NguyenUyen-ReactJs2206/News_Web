@@ -65,6 +65,16 @@ elMyPagination.addEventListener("click", function (e) {
     currentPage = parseInt(el.innerText);
     getArticles(currentPage);
   }
+
+  if (el.classList.contains("page-item-prev")) {
+    currentPage--;
+    getArticles(currentPage);
+  }
+
+  if (el.classList.contains("page-item-next")) {
+    currentPage++;
+    getArticles(currentPage);
+  }
 });
 
 function getArticles(page = 1) {
@@ -120,7 +130,9 @@ function getArticles(page = 1) {
 }
 
 function renderPagination(total) {
-  let html = `<a href="#" class="prev">Prevous</a>`;
+  const disablePrev = currentPage === 1 ? "pointer-events-none" : "";
+
+  let html = `<a href="#" class="prev page-item-prev ${disablePrev}">Prevous</a>`;
   for (let index = 1; index < total; index++) {
     const active = index === currentPage ? "active" : "";
 
@@ -128,6 +140,8 @@ function renderPagination(total) {
     <a href="#" class="page-item ${active}">${index}</a>
 `;
   }
-  html += `<a href="#" class="next">Next</a>`;
+
+  const disableNext = currentPage === total ? "pointer-events-none" : "";
+  html += `<a href="#" class="next page-item-next ${disableNext}">Next</a>`;
   elMyPagination.innerHTML = html;
 }
