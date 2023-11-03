@@ -7,6 +7,12 @@ dayjs.extend(window.dayjs_plugin_relativeTime);
 
 const elMainMenu = document.getElementById("mainMenu");
 const elArticles = document.getElementById("articles");
+const elCategoryTitle = document.getElementById("categoryTitle");
+
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+const id = parseInt(urlParams.get("id"));
+console.log(id, "id");
 
 // RENDER MENUS
 API.get(`categories_news`).then((response) => {
@@ -37,8 +43,10 @@ API.get(`categories_news`).then((response) => {
 });
 
 //RENDER ARTICLES FOR CATEGORY
-API.get("categories_news/1/articles?limit=5&page=1").then((response) => {
+API.get(`categories_news/${id}/articles?limit=5&page=1`).then((response) => {
   const articles = response.data.data;
+  let categoryName = "";
+
   console.log(articles, "ssss");
 
   let html = "";
@@ -48,42 +56,32 @@ API.get("categories_news/1/articles?limit=5&page=1").then((response) => {
     const publishDate = dayjs(item.publish_date).fromNow();
     const description = item.description;
     const authorName = item.author;
+    categoryName = item.category.name;
 
     html += /*html*/ `
                 <div class="d-md-flex post-entry-2 half">
-                  <a href="single-post.html" class="me-4 thumbnail">
-                    <img
-                      src="${thumb}"
-                      alt="${title}"
-                      class="img-fluid"
-                    />
-                  </a>
-                  <div>
-                    <div class="post-meta">
-                      <span>${publishDate}</span>
+                    <a href="single-post.html" class="me-4 thumbnail">
+                        <img src="${thumb}" alt="${title}" class="img-fluid"/>
+                    </a>
+                    <div>
+                        <div class="post-meta">
+                            <span>${publishDate}</span>
+                        </div>
+                        <h3>
+                            <a href="single-post.html" >${title}</a>
+                        </h3>
+                        <p>${description}</p>
+                        <div class="d-flex align-items-center author">
+                            <div class="photo">
+                                <img src="assets/img/person-2.jpg" alt=""class="img-fluid" />
+                            </div>
+                            <div class="name">
+                                h3 class="m-0 p-0">${authorName}</h3>
+                            </div>
+                        </div>
                     </div>
-                    <h3>
-                      <a href="single-post.html"
-                        >${title}</a
-                      >
-                    </h3>
-                    <p>
-                      ${description}
-                    </p>
-                    <div class="d-flex align-items-center author">
-                      <div class="photo">
-                        <img
-                          src="assets/img/person-2.jpg"
-                          alt=""
-                          class="img-fluid"
-                        />
-                      </div>
-                      <div class="name">
-                        <h3 class="m-0 p-0">${authorName}</h3>
-                      </div>
-                    </div>
-                  </div>
                 </div>`;
   });
+  elCategoryTitle.innerText = `Category: ${categoryName}`;
   elArticles.innerHTML = html;
 });
