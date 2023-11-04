@@ -3,6 +3,7 @@ const elCategoryTitle = document.getElementById("categoryTitle");
 // const elBtnLoadMore = document.getElementById("btnLoadMore");
 const elMyPagination = document.getElementById("myPagination");
 
+// Get ID on URL
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const id = parseInt(urlParams.get("id"));
