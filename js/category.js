@@ -75,7 +75,7 @@ function getArticles(page = 1) {
 
         html += /*html*/ `
                       <div class="d-md-flex post-entry-2 half">
-                          <a href="single-post.html" class="me-4 thumbnail">
+                          <a href="detail.html?id=${item.id}" class="me-4 thumbnail">
                               <img src="${thumb}" alt="${title}" class="img-fluid"/>
                           </a>
                           <div>
@@ -83,7 +83,7 @@ function getArticles(page = 1) {
                                   <span>${publishDate}</span>
                               </div>
                               <h3>
-                                  <a href="single-post.html" >${title}</a>
+                                  <a href="detail.html?id=${item.id}" >${title}</a>
                               </h3>
                               <p>${description}</p>
                               <div class="d-flex align-items-center author">

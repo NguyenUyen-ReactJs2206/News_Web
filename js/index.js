@@ -21,7 +21,7 @@ API.get(`articles/popular?limit=5`).then((response) => {
     html += /*html*/ ` 
   <div class="swiper-slide">
     <a
-      href="#"
+      href="detail.html?id=${item.id}"
       class="img-bg d-flex align-items-end"
       style="
         background-image: url('${item.thumb}');
@@ -57,7 +57,6 @@ API.get(`articles/popular?limit=5`).then((response) => {
 //RENDER ALL ARTICLE NEW
 API.get(`articles?limit=5`).then((response) => {
   const articles = response.data.data;
-  console.log(articles, "aaaaaaaaaaa");
 
   let html = "";
   articles.forEach((item, index) => {
@@ -115,7 +114,7 @@ API.get("categories_news/articles?limit_cate=4&limit=4").then((response) => {
       htmlArticles += /*html*/ `
     <div class="col-md-6 col-lg-3">
       <div class="post-entry-1">
-        <a href="single-post.html"
+        <a href="detail.html?id=${articleItem.id}"
           ><img
             src="${articleItem.thumb}"
             alt="${articleItem.title}"
@@ -125,7 +124,7 @@ API.get("categories_news/articles?limit_cate=4&limit=4").then((response) => {
           <span>${articleItem.publish_date}</span>
         </div>
         <h2>
-          <a href="#"
+          <a href="detail.html?id=${articleItem.id}"
             >${articleItem.title}</a
           >
         </h2>
@@ -172,7 +171,7 @@ API.get("categories_news/articles?limit_cate=4&limit=4").then((response) => {
 function renderArticleTrendingItem(item, index) {
   return /*html*/ `
   <li>
-   <a href="single-post.html">
+   <a href="detail.html?id=${item.id}">
      <span class="number">${index + 1}</span>
      <h3>
      ${item.title}
@@ -188,7 +187,7 @@ function renderArticleNewLargeItem(item) {
 
   return /*html*/ `
   <div class="post-entry-1 lg">
-  <a href="#"
+  <a href="detail.html?id=${item.id}"
     ><img
       src="${item.thumb}"
       alt="${item.title}"
@@ -200,7 +199,7 @@ function renderArticleNewLargeItem(item) {
     <span>${publishDate}</span>
   </div>
   <h2>
-    <a href="#"
+    <a href="detail.html?id=${item.id}"
       >${item.title}</a
     >
   </h2>
@@ -230,7 +229,7 @@ function renderArticleNewItem(item) {
   return /*html*/ ` 
     <div class="col-lg-6">
       <div class="post-entry-1">
-        <a href="#"
+        <a href="detail.html?id=${item.id}"
           ><img
             src="${item.thumb}"
             alt="${item.title}"
@@ -242,7 +241,7 @@ function renderArticleNewItem(item) {
           <span>${item.publish_date}</span>
         </div>
         <h2>
-          <a href="#"
+          <a href="detail.html?id=${item.id}"
             >${item.title}</a
           >
         </h2>
@@ -275,7 +274,7 @@ function renderArticlesByCategoryFeatured(articles, idx) {
       htmlArticlesLeft += /*html*/ `
       <div class="col-lg-6">
         <div class="post-entry-1">
-          <a href="#"
+          <a href="detail.html?id=${articleItem.id}"
             ><img
               src="${thumb}"
               alt="${title}"
@@ -285,7 +284,7 @@ function renderArticlesByCategoryFeatured(articles, idx) {
             <span>${publishDate}</span>
           </div>
           <h2>
-            <a href="#"
+            <a href="detail.html?id=${articleItem.id}"
               >${title}</a
             >
           </h2>
@@ -299,7 +298,7 @@ function renderArticlesByCategoryFeatured(articles, idx) {
       <span>${publishDate}</span>
       </div>
       <h2 class="mb-2">
-        <a href="#"
+        <a href="detail.html?id=${articleItem.id}"
           >${title}</a
         >
       </h2>
