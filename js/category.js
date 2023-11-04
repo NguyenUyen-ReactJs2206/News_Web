@@ -6,6 +6,9 @@ const elMyPagination = document.getElementById("myPagination");
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const id = parseInt(urlParams.get("id"));
+// Handle Error => Home (way1)
+// if (isNaN(id)) window.location.href = "index.html";
+
 let currentPage = parseInt(urlParams.get("page"));
 // Not a number then currentPage=1
 if (isNaN(currentPage)) currentPage = 1;
@@ -54,8 +57,8 @@ function addOrUpdateUrlParameter(key, value) {
 }
 
 function getArticles(page = 1) {
-  API.get(`categories_news/${id}/articles?limit=5&page=${page}`).then(
-    (response) => {
+  API.get(`categories_news/${id}/articles?limit=5&page=${page}`)
+    .then((response) => {
       const articles = response.data.data;
       let categoryName = "";
       console.log(response.data);
@@ -101,8 +104,10 @@ function getArticles(page = 1) {
       //   elArticles.innerHTML += html;
       //   elBtnLoadMore.innerText = "Xem thêm";
       //   elBtnLoadMore.disabled = false;
-    }
-  );
+    })
+    .catch((error) => {
+      window.location.href = "index.html";
+    });
 }
 
 function renderPagination(total) {
