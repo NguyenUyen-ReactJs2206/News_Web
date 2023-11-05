@@ -8,8 +8,6 @@ const elPublishDate = document.getElementById("publishDate");
 const elArticleTitle = document.getElementById("articleTitle");
 const elArticleContent = document.getElementById("articleContent");
 
-let RECENT_POST = JSON.parse(localStorage.getItem("RECENT_POST")) || [];
-
 console.log(RECENT_POST);
 API.get(`articles/${id}`)
   .then((response) => {
