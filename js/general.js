@@ -11,6 +11,24 @@ let recentPostsIdString = RECENT_POST.toString();
 
 const elRecentPosts = document.getElementById("recentPosts");
 
+//SEARCH
+const elInputSearch = document.getElementById("inputSearch");
+
+elInputSearch.addEventListener("keyup", function (e) {
+  e.preventDefault();
+  if (e.key === "Enter") {
+    //search
+    const keyword = elInputSearch.value.trim();
+    if (keyword) {
+      //todo
+      window.location.href = `search.html?keyword=${keyword}`;
+    } else {
+      alert("Vui lòng nhập từ khóa cần tìm");
+      elInputSearch.value = "";
+    }
+  }
+});
+
 API.get(`articles?limit=4&ids=${recentPostsIdStsring}`).then((response) => {
   const articles = response.data.data;
   console.log(articles);
