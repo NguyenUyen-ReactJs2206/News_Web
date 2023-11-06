@@ -53,10 +53,21 @@ function getArticles(page = 1) {
 
       let html = "";
       articles.forEach((item) => {
-        const title = item.title;
+        //Highlight keyword
+        const regex = new RegExp(keyword, "gi");
+
+        //replace(regex, `<mark>${keyword}</mark>`) : thay the thanh highlight key
+        //match is keyword
+        const title = item.title.replace(
+          regex,
+          (match) => `<mark>${match}</mark>`
+        );
         const thumb = item.thumb;
         const publishDate = dayjs(item.publish_date).fromNow();
-        const description = item.description;
+        const description = item.description.replace(
+          regex,
+          (match) => `<mark>${match}</mark>`
+        );
         const authorName = item.author;
 
         html += /*html*/ `
