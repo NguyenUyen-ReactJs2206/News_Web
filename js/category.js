@@ -7,6 +7,7 @@ const elMyPagination = document.getElementById("myPagination");
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const id = parseInt(urlParams.get("id"));
+
 // Handle Error => Home (way1)
 // if (isNaN(id)) window.location.href = "index.html";
 
@@ -75,28 +76,28 @@ function getArticles(page = 1) {
         categoryName = item.category.name;
 
         html += /*html*/ `
-                      <div class="d-md-flex post-entry-2 half">
-                          <a href="detail.html?id=${item.id}" class="me-4 thumbnail">
-                              <img src="${thumb}" alt="${title}" class="img-fluid"/>
-                          </a>
-                          <div>
-                              <div class="post-meta">
-                                  <span>${publishDate}</span>
-                              </div>
-                              <h3>
-                                  <a href="detail.html?id=${item.id}" >${title}</a>
-                              </h3>
-                              <p>${description}</p>
-                              <div class="d-flex align-items-center author">
-                                  <div class="photo">
-                                      <img src="assets/img/person-2.jpg" alt=""class="img-fluid" />
-                                  </div>
-                                  <div class="name">
-                                      <h3 class="m-0 p-0">${authorName}</h3>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>`;
+    <div class="d-md-flex post-entry-2 half">
+        <a href="detail.html?id=${item.id}" class="me-4 thumbnail">
+            <img src="${thumb}" alt="${title}" class="img-fluid"/>
+        </a>
+        <div>
+            <div class="post-meta">
+                <span>${publishDate}</span>
+            </div>
+            <h3>
+                <a href="detail.html?id=${item.id}" >${title}</a>
+            </h3>
+            <p>${description}</p>
+            <div class="d-flex align-items-center author">
+                <div class="photo">
+                    <img src="assets/img/person-2.jpg" alt=""class="img-fluid" />
+                </div>
+                <div class="name">
+                    <h3 class="m-0 p-0">${authorName}</h3>
+                </div>
+            </div>
+        </div>
+    </div>`;
       });
       elCategoryTitle.innerText = `Category: ${categoryName}`;
       elArticles.innerHTML = html;
