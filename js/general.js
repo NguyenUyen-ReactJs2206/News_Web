@@ -11,7 +11,7 @@ let recentPostsIdString = RECENT_POST.toString();
 
 const elRecentPosts = document.getElementById("recentPosts");
 
-API.get(`articles?limit=4&ids=${recentPostsIdString}`).then((response) => {
+API.get(`articles?limit=4&ids=${recentPostsIdStsring}`).then((response) => {
   const articles = response.data.data;
   console.log(articles);
 
