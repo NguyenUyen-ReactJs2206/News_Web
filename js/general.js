@@ -29,7 +29,7 @@ elInputSearch.addEventListener("keyup", function (e) {
   }
 });
 
-API.get(`articles?limit=4&ids=${recentPostsIdStsring}`).then((response) => {
+API.get(`articles?limit=4&ids=${recentPostsIdString}`).then((response) => {
   const articles = response.data.data;
   console.log(articles);
 
