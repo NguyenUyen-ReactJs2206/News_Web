@@ -35,7 +35,7 @@ API.get(`articles?limit=4&ids=${recentPostsIdString}`).then((response) => {
 
   let html = "";
   articles.forEach((item) => {
-    const categoryId = item.category.id;
+    // const categoryId = item.category.id;
 
     html += /*html*/ `  
   <li>
