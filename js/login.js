@@ -18,6 +18,10 @@ elAuthForm.addEventListener("submit", function (e) {
 
   API.post("auth/login", data)
     .then((response) => {
+      console.log("rrrrrr", response);
+      const token = response.data.access_token;
+      localStorage.setItem("ACCESS_TOKEN", token);
+
       window.location.href = "index.html";
     })
     .catch((error) => {

@@ -20,10 +20,29 @@ API.get(`categories_news`).then((response) => {
   elMainMenu.innerHTML =
     htmlMenu +
     /*html*/ `<li class="dropdown">
-         <a href="category.html">
-           <span>Danh mục khác</span>
-           <i class="bi bi-chevron-down dropdown-indicator"></i>
+        <a href="#">
+          <span>Danh mục khác</span>
+          <i class="bi dropdown-indicator bi-chevron-down"></i>
         </a>
         <ul>${htmlMenuOther}</ul>
-      </li>`;
+      </li>` +
+    /*html*/ `<li class="dropdown">
+        <a href="#">
+        <span>Tài khoản</span>
+        <i class="bi dropdown-indicator bi-chevron-down"></i>
+      </a>
+      <ul>
+        <li><a href="login.html">Đăng nhập</a></li>
+        <li><a href="register.html">Đăng ký</a></li>
+      </ul>
+    </li>`;
+
+  const token = localStorage.getItem("ACCESS_TOKEN");
+  API.get("auth/me", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }).then((responseMe) => {
+    console.log(responseMe);
+  });
 });
