@@ -25,8 +25,33 @@ API.get(`categories_news`).then((response) => {
           <i class="bi dropdown-indicator bi-chevron-down"></i>
         </a>
         <ul>${htmlMenuOther}</ul>
-      </li>` +
-    /*html*/ `<li class="dropdown">
+      </li>`;
+
+  const token = localStorage.getItem("ACCESS_TOKEN");
+  API.get("auth/me", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((responseMe) => {
+      console.log(responseMe);
+      const name = responseMe.data.data.name;
+
+      elMainMenu.innerHTML += /*html*/ `
+    <li class="dropdown">
+        <a href="#">
+        <span>${name}</span>
+        <i class="bi dropdown-indicator bi-chevron-down"></i>
+      </a>
+      <ul>
+        <li><a href="profile.html">Thông tin tài khoản</a></li>
+        <li><a href="change-password.html">Thay đổi mật khẩu</a></li>
+        <li><a href="#">Đăng xuất</a></li>
+      </ul>
+    </li>`;
+    })
+    .catch((error) => {
+      elMainMenu.innerHTML += /*html*/ `<li class="dropdown">
         <a href="#">
         <span>Tài khoản</span>
         <i class="bi dropdown-indicator bi-chevron-down"></i>
@@ -36,13 +61,5 @@ API.get(`categories_news`).then((response) => {
         <li><a href="register.html">Đăng ký</a></li>
       </ul>
     </li>`;
-
-  const token = localStorage.getItem("ACCESS_TOKEN");
-  API.get("auth/me", {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  }).then((responseMe) => {
-    console.log(responseMe);
-  });
+    });
 });
