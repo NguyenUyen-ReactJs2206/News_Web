@@ -6,11 +6,15 @@ const elPassword = document.getElementById("password");
 elAuthForm.addEventListener("submit", function (e) {
   e.preventDefault();
 
-  const email = elEmail.value.trim();
-  const password = elPassword.value.trim();
+  // const email = elEmail.value.trim();
+  // const password = elPassword.value.trim();
 
-  const data = { email, password };
-  console.log(data);
+  // const data = { email, password };
+  // console.log(data);
+
+  // Get value from Form - Using FormData
+  const formData = new FormData(elAuthForm);
+  const data = Object.fromEntries(formData);
 
   API.post("auth/login", data)
     .then((response) => {
