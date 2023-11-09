@@ -1,3 +1,11 @@
+API.get("auth/me", {
+  headers: {
+    Authorization: `Bearer ${token}`,
+  },
+}).then(() => {
+  window.location.href = "index.html";
+});
+
 const elAuthForm = document.getElementById("authForm");
 const elFormMessage = document.getElementById("formMessage");
 const elEmail = document.getElementById("email");

@@ -44,7 +44,7 @@ API.get(`categories_news`).then((response) => {
       <ul>
         <li><a href="profile.html">Thông tin tài khoản</a></li>
         <li><a href="change-password.html">Thay đổi mật khẩu</a></li>
-        <li><a href="#">Đăng xuất</a></li>
+        <li><a href="#" id="btnLogout">Đăng xuất</a></li>
       </ul>
     </li>`;
     })
@@ -60,4 +60,16 @@ API.get(`categories_news`).then((response) => {
       </ul>
     </li>`;
     });
+});
+
+//LOGOUT
+elMainMenu.addEventListener("click", function (e) {
+  const el = e.target;
+  console.log(e.target, "eeeeee");
+
+  if (el.id === "btnLogout") {
+    e.preventDefault();
+    localStorage.removeItem(ACCESS_TOKEN);
+    window.location.href = "index.html";
+  }
 });
