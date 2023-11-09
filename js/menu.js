@@ -27,14 +27,12 @@ API.get(`categories_news`).then((response) => {
         <ul>${htmlMenuOther}</ul>
       </li>`;
 
-  const token = localStorage.getItem("ACCESS_TOKEN");
   API.get("auth/me", {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   })
     .then((responseMe) => {
-      console.log(responseMe);
       const name = responseMe.data.data.name;
 
       elMainMenu.innerHTML += /*html*/ `

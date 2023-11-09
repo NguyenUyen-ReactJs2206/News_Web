@@ -5,6 +5,9 @@ const API = axios.create({
 dayjs.locale("vi");
 dayjs.extend(window.dayjs_plugin_relativeTime);
 
+const ACCESS_TOKEN = "ACCESS_TOKEN";
+const token = localStorage.getItem(ACCESS_TOKEN);
+
 let RECENT_POST = JSON.parse(localStorage.getItem("RECENT_POST")) || [];
 
 let recentPostsIdString = RECENT_POST.toString();
