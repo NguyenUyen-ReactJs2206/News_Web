@@ -39,18 +39,7 @@ elAuthForm.addEventListener("submit", function (e) {
     })
     .catch((err) => {
       const errors = err.responseRegister.errors;
-      let errString = "";
 
-      //loop object - Duyet qua object
-      for (const property in errors) {
-        errString += /*html*/ `<li>${errors[property]}</li>`;
-      }
-
-      elFormMessage.innerHTML = /*html*/ `
-      <div class="alert alert-danger" role="alert">
-        <ul>
-          ${errString}
-        </ul>
-      </div>`;
+      showFormErrorsMessage(errors, elFormMessage);
     });
 });

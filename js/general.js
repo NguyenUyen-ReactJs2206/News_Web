@@ -64,3 +64,19 @@ API.get(`articles?limit=4&ids=${recentPostsIdString}`).then((response) => {
 
   elRecentPosts.innerHTML = html;
 });
+
+function showFormErrorsMessage(errors, el) {
+  let errString = "";
+
+  //loop object - Duyet qua object
+  for (const property in errors) {
+    errString += /*html*/ `<li>${errors[property]}</li>`;
+  }
+
+  el.innerHTML = /*html*/ `
+      <div class="alert alert-danger" role="alert">
+        <ul>
+          ${errString}
+        </ul>
+      </div>`;
+}
