@@ -1,39 +1,42 @@
+const elAuthForm = document.getElementById("authForm");
+const elFormMessage = document.getElementById("formMessage");
+const elName = document.getElementById("name");
+const elEmail = document.getElementById("email");
+const elPhone = document.getElementById("phone");
+const elAddress = document.getElementById("address");
+
 API.get("auth/me", {
   headers: {
     Authorization: `Bearer ${token}`,
   },
 })
-  .then(() => {})
+  .then((response) => {
+    const data = response.data.data;
+    elEmail.value = data.email;
+    elName.value = data.name;
+    elPhone.value = data.phone;
+    elAddress.value = data.address;
+  })
   .catch((error) => {
     window.location.href = "index.html";
   });
 
-const elAuthForm = document.getElementById("authForm");
-const elPasswordCurrent = document.getElementById("password_current");
-const elPassword = document.getElementById("password");
-const elPasswordConfirm = document.getElementById("password_confirmation");
-const elFormMessage = document.getElementById("formMessage");
-
 elAuthForm.addEventListener("submit", function (e) {
   e.preventDefault();
 
+  // Get value from Form - Using FormData
   const formData = new FormData(elAuthForm);
   const data = Object.fromEntries(formData);
-  console.log(data, "ddddđ");
-
-  API.put("auth/change-password", data, {
+  console.log(data);
+  API.put("auth/update", data, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   })
     .then((response) => {
-      elPasswordCurrent.value = "";
-      elPassword.value = "";
-      elPasswordConfirm.value = "";
-
       elFormMessage.innerHTML = /*html*/ `
       <div class="alert alert-success" role="alert">
-        Thay đổi mật khẩu thành công
+      Cập nhập thông tin thành công
       </div>`;
     })
     .catch((error) => {
