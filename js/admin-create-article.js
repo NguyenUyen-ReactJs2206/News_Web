@@ -8,10 +8,10 @@ API.callWithToken()
 const elAuthForm = document.getElementById("authForm");
 const elFormMessage = document.getElementById("formMessage");
 const elThumb = document.getElementById("thumb");
-const elThumPreview = document.getElementById("thumPreview");
+const elThumbPreview = document.getElementById("thumPreview");
 
 elThumb.addEventListener("change", function () {
-  if (elThumb.value) elThumPreview.src = elThumb.value;
+  if (elThumb.value) elThumbPreview.src = elThumb.value;
 });
 
 elAuthForm.addEventListener("submit", function (e) {
@@ -27,6 +27,7 @@ elAuthForm.addEventListener("submit", function (e) {
     .then((response) => {
       elFormMessage.innerHTML = "";
       elAuthForm.reset();
+      elThumbPreview.src = "./image/Placeholder_view_vector.png";
     })
     .catch((error) => {
       const errors = error.response.data.errors;
