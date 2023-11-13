@@ -5,11 +5,8 @@ const elEmail = document.getElementById("email");
 const elPhone = document.getElementById("phone");
 const elAddress = document.getElementById("address");
 
-API.get("auth/me", {
-  headers: {
-    Authorization: `Bearer ${token}`,
-  },
-})
+API.callWithToken()
+  .get("auth/me")
   .then((response) => {
     const data = response.data.data;
     elEmail.value = data.email;
@@ -28,11 +25,8 @@ elAuthForm.addEventListener("submit", function (e) {
   const formData = new FormData(elAuthForm);
   const data = Object.fromEntries(formData);
   console.log(data);
-  API.put("auth/update", data, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  })
+  API.callWithToken()
+    .put("auth/update", data)
     .then((response) => {
       elFormMessage.innerHTML = /*html*/ `
       <div class="alert alert-success" role="alert">

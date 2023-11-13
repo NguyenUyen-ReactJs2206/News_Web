@@ -1,10 +1,8 @@
-API.get("auth/me", {
-  headers: {
-    Authorization: `Bearer ${token}`,
-  },
-}).then(() => {
-  window.location.href = "index.html";
-});
+API.callWithToken()
+  .get("auth/me")
+  .then(() => {
+    window.location.href = "index.html";
+  });
 
 const elAuthForm = document.getElementById("authForm");
 const elFormMessage = document.getElementById("formMessage");
@@ -30,12 +28,15 @@ elAuthForm.addEventListener("submit", function (e) {
   const data = Object.fromEntries(formData);
   console.log(data);
 
-  API.post("users/register", data)
+  API.call()
+    .post("users/register", data)
     .then((responseRegister) => {
       const dataLogin = { email: data.email, password: data.password };
-      API.post("auth/login", dataLogin).then((responseLogin) => {
-        window.location.href = "index.html";
-      });
+      API.call()
+        .post("auth/login", dataLogin)
+        .then((responseLogin) => {
+          window.location.href = "index.html";
+        });
     })
     .catch((err) => {
       const errors = err.responseRegister.errors;

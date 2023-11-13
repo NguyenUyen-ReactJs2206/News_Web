@@ -1,25 +1,27 @@
 const elMainMenu = document.getElementById("mainMenu");
 
 // RENDER MENUS
-API.get(`categories_news`).then((response) => {
-  const data = response.data;
-  const categories = data.data;
+API.call()
+  .get(`categories_news`)
+  .then((response) => {
+    const data = response.data;
+    const categories = data.data;
 
-  let htmlMenu = "";
-  let htmlMenuOther = "";
+    let htmlMenu = "";
+    let htmlMenuOther = "";
 
-  categories.forEach((item, index) => {
-    if (index < 3) {
-      htmlMenu += /*html*/ `<li><a href="category.html?id=${item.id}">${item.name}</a></li>`;
-    } else {
-      htmlMenuOther += /*html*/ `<li><a href="category.html?id=${item.id}">${item.name}</a></li>`;
-    }
-  });
+    categories.forEach((item, index) => {
+      if (index < 3) {
+        htmlMenu += /*html*/ `<li><a href="category.html?id=${item.id}">${item.name}</a></li>`;
+      } else {
+        htmlMenuOther += /*html*/ `<li><a href="category.html?id=${item.id}">${item.name}</a></li>`;
+      }
+    });
 
-  //hien thi len id=mainMenu
-  elMainMenu.innerHTML =
-    htmlMenu +
-    /*html*/ `<li class="dropdown">
+    //hien thi len id=mainMenu
+    elMainMenu.innerHTML =
+      htmlMenu +
+      /*html*/ `<li class="dropdown">
         <a href="#">
           <span>Danh mục khác</span>
           <i class="bi dropdown-indicator bi-chevron-down"></i>
@@ -27,15 +29,12 @@ API.get(`categories_news`).then((response) => {
         <ul>${htmlMenuOther}</ul>
       </li>`;
 
-  API.get("auth/me", {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  })
-    .then((responseMe) => {
-      const name = responseMe.data.data.name;
+    API.callWithToken()
+      .get("auth/me")
+      .then((responseMe) => {
+        const name = responseMe.data.data.name;
 
-      elMainMenu.innerHTML += /*html*/ `
+        elMainMenu.innerHTML += /*html*/ `
     <li class="dropdown">
         <a href="#">
         <span>${name}</span>
@@ -47,9 +46,9 @@ API.get(`categories_news`).then((response) => {
         <li><a href="#" id="btnLogout">Đăng xuất</a></li>
       </ul>
     </li>`;
-    })
-    .catch((error) => {
-      elMainMenu.innerHTML += /*html*/ `<li class="dropdown">
+      })
+      .catch((error) => {
+        elMainMenu.innerHTML += /*html*/ `<li class="dropdown">
         <a href="#">
         <span>Tài khoản</span>
         <i class="bi dropdown-indicator bi-chevron-down"></i>
@@ -59,8 +58,8 @@ API.get(`categories_news`).then((response) => {
         <li><a href="register.html">Đăng ký</a></li>
       </ul>
     </li>`;
-    });
-});
+      });
+  });
 
 //LOGOUT
 elMainMenu.addEventListener("click", function (e) {

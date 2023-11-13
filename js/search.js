@@ -44,7 +44,8 @@ function addOrUpdateUrlParameter(key, value) {
 }
 
 function getArticles(page = 1) {
-  API.get(`articles/search?q=${keyword}&limit=5&page=${page}`)
+  API.call()
+    .get(`articles/search?q=${keyword}&limit=5&page=${page}`)
     .then((response) => {
       const articles = response.data.data;
       console.log(response.data);

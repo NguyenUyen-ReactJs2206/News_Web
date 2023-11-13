@@ -13,12 +13,14 @@ const elCategoriesFeaturedTabContent = document.getElementById(
 const elArticlesSlider = document.getElementById("articlesSlider");
 
 //RENDER ARTICLES SLIDER
-API.get(`articles/popular?limit=5`).then((response) => {
-  const articles = response.data.data;
+API.call()
+  .get(`articles/popular?limit=5`)
+  .then((response) => {
+    const articles = response.data.data;
 
-  let html = "";
-  articles.forEach((item, index) => {
-    html += /*html*/ ` 
+    let html = "";
+    articles.forEach((item, index) => {
+      html += /*html*/ ` 
   <div class="swiper-slide">
     <a
       href="detail.html?id=${item.id}"
@@ -37,51 +39,57 @@ API.get(`articles/popular?limit=5`).then((response) => {
       </div>
     </a>
   </div>`;
-  });
+    });
 
-  elArticlesSlider.innerHTML = html;
-});
+    elArticlesSlider.innerHTML = html;
+  });
 
 //RENDER ARTICLES TRENDING
-API.get(`articles/popular?limit=5`).then((response) => {
-  const articles = response.data.data;
+API.call()
+  .get(`articles/popular?limit=5`)
+  .then((response) => {
+    const articles = response.data.data;
 
-  let html = "";
-  articles.forEach((item, index) => {
-    html += renderArticleTrendingItem(item, index);
+    let html = "";
+    articles.forEach((item, index) => {
+      html += renderArticleTrendingItem(item, index);
+    });
+
+    elArticlesTrending.innerHTML = html;
   });
-
-  elArticlesTrending.innerHTML = html;
-});
 
 //RENDER ALL ARTICLE NEW
-API.get(`articles?limit=5`).then((response) => {
-  const articles = response.data.data;
+API.call()
+  .get(`articles?limit=5`)
+  .then((response) => {
+    const articles = response.data.data;
 
-  let html = "";
-  articles.forEach((item, index) => {
-    if (index === 0) {
-      elArticleNewLarge.innerHTML = renderArticleNewLargeItem(item);
-    } else {
-      html += renderArticleNewItem(item);
-    }
+    let html = "";
+    articles.forEach((item, index) => {
+      if (index === 0) {
+        elArticleNewLarge.innerHTML = renderArticleNewLargeItem(item);
+      } else {
+        html += renderArticleNewItem(item);
+      }
+    });
+
+    elArticlesNew.innerHTML = html;
   });
 
-  elArticlesNew.innerHTML = html;
-});
-
 //RENDER CATEGORY FEATURE WITH ARTICLES
-API.get("categories_news/articles?limit_cate=2&limit=9").then((response) => {
-  const data = response.data.data;
-  // console.log(data);
+API.call()
+  .get("categories_news/articles?limit_cate=2&limit=9")
+  .then((response) => {
+    const data = response.data.data;
+    // console.log(data);
 
-  let html = "";
-  data.forEach((item, index) => {
-    const categoryId = item.id;
-    const categoryName = item.name;
-    const articles = item.articles;
+    let html = "";
+    data.forEach((item, index) => {
+      const categoryId = item.id;
+      const categoryName = item.name;
+      const articles = item.articles;
 
-    html += /*html*/ `
+      html += /*html*/ `
     <section class="category-section">
         <div class="container" data-aos="fade-up">
           ${renderCategorySectionTitle(categoryName, categoryId)}
@@ -89,29 +97,31 @@ API.get("categories_news/articles?limit_cate=2&limit=9").then((response) => {
         </div>
     </section>
 `;
+    });
+
+    elCategoriesFeturedWithArticles.innerHTML = html;
   });
 
-  elCategoriesFeturedWithArticles.innerHTML = html;
-});
-
 //RENDER CATEGORY FEATURED WITH ARTICLES LAYOUT TAB
-API.get("categories_news/articles?limit_cate=4&limit=4").then((response) => {
-  const data = response.data.data;
-  console.log(data);
+API.call()
+  .get("categories_news/articles?limit_cate=4&limit=4")
+  .then((response) => {
+    const data = response.data.data;
+    console.log(data);
 
-  let htmlTab = "";
-  let htmlTabContent = "";
+    let htmlTab = "";
+    let htmlTabContent = "";
 
-  data.forEach((item, index) => {
-    const categoryName = item.name;
-    const articles = item.articles;
-    const slug = item.slug;
-    const active = index === 0 ? "active" : "";
-    const activeShow = index === 0 ? "active show" : "";
+    data.forEach((item, index) => {
+      const categoryName = item.name;
+      const articles = item.articles;
+      const slug = item.slug;
+      const active = index === 0 ? "active" : "";
+      const activeShow = index === 0 ? "active show" : "";
 
-    let htmlArticles = "";
-    articles.forEach((articleItem, index) => {
-      htmlArticles += /*html*/ `
+      let htmlArticles = "";
+      articles.forEach((articleItem, index) => {
+        htmlArticles += /*html*/ `
     <div class="col-md-6 col-lg-3">
       <div class="post-entry-1">
         <a href="detail.html?id=${articleItem.id}"
@@ -131,9 +141,9 @@ API.get("categories_news/articles?limit_cate=4&limit=4").then((response) => {
       </div>
     </div>
       `;
-    });
+      });
 
-    htmlTab += /*html*/ `
+      htmlTab += /*html*/ `
             <li class="nav-item" role="presentation">
               <button
                 class="nav-link ${active}"
@@ -150,7 +160,7 @@ API.get("categories_news/articles?limit_cate=4&limit=4").then((response) => {
             </li>
 `;
 
-    htmlTabContent += /*html*/ ` 
+      htmlTabContent += /*html*/ ` 
   <div
     class="tab-pane fade ${activeShow}"
     id="${slug}-tab-pane"
@@ -162,11 +172,11 @@ API.get("categories_news/articles?limit_cate=4&limit=4").then((response) => {
   </div>
 
 `;
-  });
+    });
 
-  elCategoriesFeaturedTab.innerHTML = htmlTab;
-  elCategoriesFeaturedTabContent.innerHTML = htmlTabContent;
-});
+    elCategoriesFeaturedTab.innerHTML = htmlTab;
+    elCategoriesFeaturedTabContent.innerHTML = htmlTabContent;
+  });
 
 function renderArticleTrendingItem(item, index) {
   return /*html*/ `

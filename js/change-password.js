@@ -1,8 +1,5 @@
-API.get("auth/me", {
-  headers: {
-    Authorization: `Bearer ${token}`,
-  },
-})
+API.callWithToken()
+  .get("auth/me")
   .then(() => {})
   .catch((error) => {
     window.location.href = "index.html";
@@ -19,13 +16,9 @@ elAuthForm.addEventListener("submit", function (e) {
 
   const formData = new FormData(elAuthForm);
   const data = Object.fromEntries(formData);
-  console.log(data, "ddddđ");
 
-  API.put("auth/change-password", data, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  })
+  API.callWithToken()
+    .put("auth/change-password", data)
     .then((response) => {
       elPasswordCurrent.value = "";
       elPassword.value = "";

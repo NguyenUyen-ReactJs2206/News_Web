@@ -59,7 +59,8 @@ function addOrUpdateUrlParameter(key, value) {
 }
 
 function getArticles(page = 1) {
-  API.get(`categories_news/${id}/articles?limit=5&page=${page}`)
+  API.call()
+    .get(`categories_news/${id}/articles?limit=5&page=${page}`)
     .then((response) => {
       const articles = response.data.data;
       let categoryName = "";

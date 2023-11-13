@@ -1,6 +1,25 @@
-const API = axios.create({
-  baseURL: "https://apiforlearning.zendvn.com/api/v2/",
-});
+// const API = axios.create({
+//   baseURL: "https://apiforlearning.zendvn.com/api/v2/",
+// });
+
+const API = {
+  call: function () {
+    return axios.create({
+      baseURL: "https://apiforlearning.zendvn.com/api/v2/",
+    });
+  },
+  callWithToken: function (token) {
+    if (!token) {
+      token = localStorage.getItem(ACCESS_TOKEN);
+    }
+    return axios.create({
+      baseURL: "https://apiforlearning.zendvn.com/api/v2/",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  },
+};
 
 dayjs.locale("vi");
 dayjs.extend(window.dayjs_plugin_relativeTime);
@@ -32,15 +51,17 @@ elInputSearch.addEventListener("keyup", function (e) {
   }
 });
 
-API.get(`articles?limit=4&ids=${recentPostsIdString}`).then((response) => {
-  const articles = response.data.data;
-  console.log(articles);
+API.call()
+  .get(`articles?limit=4&ids=${recentPostsIdString}`)
+  .then((response) => {
+    const articles = response.data.data;
+    console.log(articles);
 
-  let html = "";
-  articles.forEach((item) => {
-    // const categoryId = item.category.id;
+    let html = "";
+    articles.forEach((item) => {
+      // const categoryId = item.category.id;
 
-    html += /*html*/ `  
+      html += /*html*/ `  
   <li>
     <a href="detail.html?id=${item.id}" class="d-flex align-items-center">
       <img
@@ -60,10 +81,10 @@ API.get(`articles?limit=4&ids=${recentPostsIdString}`).then((response) => {
       </div>
     </a>
   </li>`;
-  });
+    });
 
-  elRecentPosts.innerHTML = html;
-});
+    elRecentPosts.innerHTML = html;
+  });
 
 function showFormErrorsMessage(errors, el) {
   let errString = "";

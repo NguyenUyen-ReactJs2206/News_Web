@@ -1,10 +1,8 @@
-API.get("auth/me", {
-  headers: {
-    Authorization: `Bearer ${token}`,
-  },
-}).then(() => {
-  window.location.href = "index.html";
-});
+API.callWithToken()
+  .get("auth/me")
+  .then(() => {
+    window.location.href = "index.html";
+  });
 
 const elAuthForm = document.getElementById("authForm");
 const elFormMessage = document.getElementById("formMessage");
@@ -24,7 +22,8 @@ elAuthForm.addEventListener("submit", function (e) {
   const formData = new FormData(elAuthForm);
   const data = Object.fromEntries(formData);
 
-  API.post("auth/login", data)
+  API.call()
+    .post("auth/login", data)
     .then((response) => {
       const token = response.data.access_token;
       localStorage.setItem(ACCESS_TOKEN, token);

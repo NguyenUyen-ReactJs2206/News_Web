@@ -9,7 +9,8 @@ const elArticleTitle = document.getElementById("articleTitle");
 const elArticleContent = document.getElementById("articleContent");
 
 console.log(RECENT_POST);
-API.get(`articles/${id}`)
+API.call()
+  .get(`articles/${id}`)
   .then((response) => {
     console.log(response.data);
     const article = response.data.data;
