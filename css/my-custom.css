@@ -7,3 +7,8 @@ mark {
   background-color: gold;
   padding: 0;
 }
+
+.ck-editor__editable {
+  /* editing area */
+  min-height: 300px;
+}

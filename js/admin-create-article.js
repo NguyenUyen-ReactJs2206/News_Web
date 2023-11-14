@@ -9,6 +9,10 @@ API.callWithToken()
     window.location.href = "index.html";
   });
 
+ClassicEditor.create(document.querySelector("#content")).catch((error) => {
+  console.error(error);
+});
+
 const elAuthForm = document.getElementById("authForm");
 const elFormMessage = document.getElementById("formMessage");
 const elThumb = document.getElementById("thumb");
