@@ -46,6 +46,15 @@ elAuthForm.addEventListener("submit", function (e) {
       elFormMessage.innerHTML = "";
       elAuthForm.reset();
       elThumbPreview.src = "./image/Placeholder_view_vector.png";
+
+      Toastify({
+        text: "Tạo bài viết thành công",
+        duration: 3000,
+        close: true,
+        style: {
+          background: "linear-gradient(to right, #00b09b, #96c93d)",
+        },
+      }).showToast();
     })
     .catch((error) => {
       const errors = error.response.data.errors;
